@@ -1,0 +1,363 @@
+/* =========================
+   GLOBAL
+   ========================= */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: 'Inter', Arial, sans-serif;
+    background-color: #000000;
+    color: white;
+}
+
+
+
+
+/* =========================
+   NAVBAR
+   ========================= */
+
+header {
+    width: 100%;
+    padding: 25px 60px;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    background: linear-gradient(
+        135deg,
+        rgba(255, 255, 255, 0.12),
+        rgba(255, 255, 255, 0.05)
+    );
+    -webkit-backdrop-filter: blur(18px);
+    backdrop-filter: blur(18px);
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.15),
+        0 8px 30px rgba(0, 0, 0, 0.35);
+}
+
+
+/* Logo */
+
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.logo img {
+    width: 35px;
+    height: 35px;
+    object-fit: contain;
+}
+
+.logo span {
+    font-size: 18px;
+    font-weight: 500;
+}
+
+
+/* Navigation */
+
+nav {
+    display: flex;
+    gap: 35px;
+}
+
+nav a {
+    color: white;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 500;
+
+    transition: 0.3s;
+}
+
+nav a:hover {
+    color: #fb0404;
+}
+
+/* Added by JS once the page is scrolled down */
+header.scrolled {
+    background: linear-gradient(
+        135deg,
+        rgba(255, 255, 255, 0.16),
+        rgba(255, 255, 255, 0.07)
+    );
+    -webkit-backdrop-filter: blur(20px);
+    backdrop-filter: blur(20px);
+    box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.18),
+        0 8px 32px rgba(0, 0, 0, 0.4);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+/* Highlighted when its section is in view */
+nav a.active {
+    color: #9500ff;
+}
+
+
+/* =========================
+   HOME
+   ========================= */
+
+#home {
+    min-height: 90vh;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    gap: 80px;
+    padding: 60px;
+}
+
+
+/* Profile Photo (cutout with transparent background) */
+
+.profile img {
+    width: 320px;
+    height: auto;
+
+    /* No border-radius / crop: the image already has a
+       transparent background, so we show it as-is. */
+    filter: drop-shadow(0 10px 50px rgba(255, 255, 255, 0.6));
+}
+
+
+/* Introduction */
+
+.intro {
+    max-width: 1000px;
+}
+
+.intro h1 {
+    font-size: 48px;
+    line-height: 1.1;
+    margin-bottom: 25px;
+}
+
+.intro h2 {
+    font-size: 16px;
+    line-height: 1.1;
+    margin-bottom: 48px;
+}
+
+.social-icons {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+.social-icons a {
+    color: #b5b5b5;
+    font-size: 24px;
+    transition: 0.3s;
+}
+
+.social-icons a:hover {
+    color: #fafafc;
+    transform: translateY(-3px);
+}
+
+.typed-line {
+    margin-top: 25px;
+    font-family: 'Inter', Arial, sans-serif;
+    font-size: 28px;
+    font-weight: 600;
+    color: #f6f5f9;
+    min-height: 40px;
+    letter-spacing: 0.5px;
+}
+
+.typed-cursor {
+    color: #ffffff;
+    display: inline-block;
+    animation: blink 0.8s step-end infinite;
+}
+
+@keyframes blink {
+    50% { opacity: 0; }
+}
+
+
+/* =========================
+   GENERAL SECTION
+   ========================= */
+
+section {
+    min-height: 100vh;
+    padding: 100px 80px;
+}
+
+section h2 {
+    font-size: 36px;
+    margin-bottom: 30px;
+}
+
+
+/* =========================
+   ABOUT ME
+   ========================= */
+
+#aboutme {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 80px;
+}
+
+#aboutme p {
+    max-width: 700px;
+
+    font-size: 17px;
+    line-height: 1.8;
+    color: #b5b5b5;
+}
+
+.profile2 img {
+    width: 320px;
+    height: auto;
+
+    /* No border-radius / crop: the image already has a
+       transparent background, so we show it as-is. */
+    filter: drop-shadow(0 10px 30px rgba(0, 0, 0, 0.6));
+}
+
+.intro2 {
+    max-width: 650px;
+}
+
+.sketchfab-embed-wrapper {
+    width: 100%;
+    max-width: 720px;
+    height: 600px;
+    border-radius: 14px;
+}
+
+.sketchfab-embed-wrapper iframe {
+    width: 100%;
+    height: 600px;
+    border: none;
+    border-radius: 14px;
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.5);
+}
+
+.sketchfab-embed-wrapper p {
+    text-align: center;
+    margin: 10px 0 0 0;
+}
+
+.intro p {
+    font-size: 17px;
+    line-height: 1.8;
+    color: #b5b5b5;
+}
+
+
+/* =========================
+   SKILLS
+   ========================= */
+
+#skills ul {
+    list-style: none;
+
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+}
+
+#skills li {
+    padding: 12px 20px;
+
+    border: 1px solid #333;
+    border-radius: 8px;
+
+    color: #d0d0d0;
+}
+
+
+/* =========================
+   PROJECT
+   ========================= */
+
+.project-card {
+    max-width: 500px;
+
+    padding: 30px;
+
+    border: 1px solid #333;
+    border-radius: 12px;
+}
+
+.project-card h3 {
+    font-size: 24px;
+    margin-bottom: 15px;
+}
+
+.project-card p {
+    color: #b5b5b5;
+    line-height: 1.6;
+    margin-bottom: 15px;
+}
+
+.project-card a {
+    color: #8b5cf6;
+    text-decoration: none;
+}
+
+.project-card a:hover {
+    text-decoration: underline;
+}
+
+
+/* =========================
+   CERTIFICATE
+   ========================= */
+
+.certificate-card {
+    max-width: 500px;
+
+    padding: 30px;
+
+    border: 1px solid #333;
+    border-radius: 12px;
+}
+
+.certificate-card h3 {
+    font-size: 22px;
+    margin-bottom: 10px;
+}
+
+.certificate-card p {
+    color: #b5b5b5;
+}
+
+
+/* =========================
+   SCROLL REVEAL (JS adds these)
+   ========================= */
+
+section.reveal {
+    opacity: 0;
+    transform: translateY(40px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+}
+
+section.revealed {
+    opacity: 1;
+    transform: translateY(0);
+}
