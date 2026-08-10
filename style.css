@@ -275,6 +275,13 @@ section h2 {
     gap: 24px;
 }
 
+.skills-subtitle {
+    font-size: 22px;
+    font-weight: 600;
+    color: #8b5cf6;
+    margin: 40px 0 20px 0;
+}
+
 .skill-item {
     padding: 30px;
 
@@ -309,6 +316,12 @@ section h2 {
 .skill-name i {
     color: #8b5cf6;
     font-size: 20px;
+}
+
+.skill-logo {
+    width: 20px;
+    height: 20px;
+    object-fit: contain;
 }
 
 .progress {
