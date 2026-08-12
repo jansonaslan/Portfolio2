@@ -84,3 +84,32 @@ function type() {
 }
 
 type();
+
+const lightbox = document.getElementById("lightbox");
+const lightboxImage = lightbox.querySelector(".lightbox-image");
+const lightboxClose = lightbox.querySelector(".lightbox-close");
+
+document.querySelectorAll(".certificate-image").forEach((item) => {
+    item.addEventListener("click", () => {
+        const img = item.querySelector("img");
+        lightboxImage.src = img.src;
+        lightboxImage.alt = img.alt;
+        lightbox.classList.add("open");
+        lightbox.setAttribute("aria-hidden", "false");
+    });
+});
+
+function closeLightbox() {
+    lightbox.classList.remove("open");
+    lightbox.setAttribute("aria-hidden", "true");
+}
+
+lightboxClose.addEventListener("click", closeLightbox);
+
+lightbox.addEventListener("click", (e) => {
+    if (e.target === lightbox) closeLightbox();
+});
+
+window.addEventListener("keydown", (e) => {
+    if (e.key === "Escape") closeLightbox();
+});
