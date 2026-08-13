@@ -33,10 +33,14 @@ const revealObserver = new IntersectionObserver((entries) => {
     entries.forEach((entry) => {
         if (entry.isIntersecting) {
             entry.target.classList.add("revealed");
+            entry.target.querySelectorAll(".progress-bar").forEach((bar) => {
+                const value = bar.dataset.width || "0%";
+                requestAnimationFrame(() => { bar.style.width = value; });
+            });
             revealObserver.unobserve(entry.target);
         }
     });
-}, { threshold: 0.15 });
+}, { threshold: 0, rootMargin: "0px 0px -40px 0px" });
 
 sections.forEach((section) => {
     section.classList.add("reveal");
@@ -61,34 +65,19 @@ navToggle.addEventListener("click", () => {
 
 navLinks.forEach((link) => link.addEventListener("click", closeMobileNav));
 
-/* ---------------- Staggered card reveal ---------------- */
+/* ---------------- Card reveal (each card animates individually) ---------------- */
 
-document.querySelectorAll(".project-grid, .certificate-grid, #skills .row").forEach((grid) => {
-    grid.classList.add("stagger");
-    revealObserver.observe(grid);
+document.querySelectorAll(
+    ".project-grid > *, .certificate-grid > *, #skills .row > *"
+).forEach((card) => {
+    card.classList.add("reveal-card");
+    revealObserver.observe(card);
 });
 
-/* ---------------- Animated skill bars ---------------- */
-
-const skillBars = document.querySelectorAll(".skill-item .progress-bar");
-
-const barObserver = new IntersectionObserver((entries) => {
-    entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-            const bar = entry.target;
-            const target = bar.dataset.width || "0%";
-            requestAnimationFrame(() => {
-                bar.style.width = target;
-            });
-            barObserver.unobserve(bar);
-        }
-    });
-}, { threshold: 0.5 });
-
-skillBars.forEach((bar) => {
+/* Skill bars start empty and fill when their card is revealed */
+document.querySelectorAll(".skill-item .progress-bar").forEach((bar) => {
     bar.dataset.width = bar.style.width;
     bar.style.width = "0";
-    barObserver.observe(bar);
 });
 
 /* ---------------- Typing effect ---------------- */
