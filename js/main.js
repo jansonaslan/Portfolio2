@@ -1,10 +1,12 @@
 const header = document.querySelector("header");
-const navLinks = document.querySelectorAll("nav a");   
-const sections = document.querySelectorAll("section"); 
+const nav = document.getElementById("primary-nav");
+const navToggle = document.querySelector(".nav-toggle");
+const navLinks = document.querySelectorAll("nav a");
+const sections = document.querySelectorAll("section");
 
 function handleScrollDown() {
     if (window.scrollY > 40) {
-        header.classList.add("scrolled"); 
+        header.classList.add("scrolled");
     } else {
         header.classList.remove("scrolled");
     }
@@ -13,11 +15,8 @@ function handleScrollDown() {
 window.addEventListener("scroll", handleScrollDown);
 
 function highlightActiveLink() {
-
     sections.forEach((section) => {
-        
         const rect = section.getBoundingClientRect();
-
         const atTop = rect.top <= 120 && rect.bottom >= 120;
 
         if (atTop) {
@@ -33,11 +32,11 @@ window.addEventListener("scroll", highlightActiveLink);
 const revealObserver = new IntersectionObserver((entries) => {
     entries.forEach((entry) => {
         if (entry.isIntersecting) {
-            entry.target.classList.add("revealed"); 
-            revealObserver.unobserve(entry.target); 
+            entry.target.classList.add("revealed");
+            revealObserver.unobserve(entry.target);
         }
     });
-}, { threshold: 0.15 }); 
+}, { threshold: 0.15 });
 
 sections.forEach((section) => {
     section.classList.add("reveal");
@@ -45,6 +44,54 @@ sections.forEach((section) => {
 });
 
 highlightActiveLink();
+
+/* ---------------- Mobile navigation ---------------- */
+
+function closeMobileNav() {
+    nav.classList.remove("open");
+    navToggle.classList.remove("open");
+    navToggle.setAttribute("aria-expanded", "false");
+}
+
+navToggle.addEventListener("click", () => {
+    const isOpen = nav.classList.toggle("open");
+    navToggle.classList.toggle("open", isOpen);
+    navToggle.setAttribute("aria-expanded", String(isOpen));
+});
+
+navLinks.forEach((link) => link.addEventListener("click", closeMobileNav));
+
+/* ---------------- Staggered card reveal ---------------- */
+
+document.querySelectorAll(".project-grid, .certificate-grid, #skills .row").forEach((grid) => {
+    grid.classList.add("stagger");
+    revealObserver.observe(grid);
+});
+
+/* ---------------- Animated skill bars ---------------- */
+
+const skillBars = document.querySelectorAll(".skill-item .progress-bar");
+
+const barObserver = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+            const bar = entry.target;
+            const target = bar.dataset.width || "0%";
+            requestAnimationFrame(() => {
+                bar.style.width = target;
+            });
+            barObserver.unobserve(bar);
+        }
+    });
+}, { threshold: 0.5 });
+
+skillBars.forEach((bar) => {
+    bar.dataset.width = bar.style.width;
+    bar.style.width = "0";
+    barObserver.observe(bar);
+});
+
+/* ---------------- Typing effect ---------------- */
 
 const typingSpan = document.getElementById("typing");
 const phrases = [
@@ -56,8 +103,8 @@ const phrases = [
 let phraseIndex = 0;
 let charIndex = 0;
 let deleting = false;
-const typeSpeed = 80;        
-const deleteSpeed = 45;      
+const typeSpeed = 80;
+const deleteSpeed = 45;
 const holdBeforeDelete = 1800;
 
 function type() {
@@ -67,7 +114,7 @@ function type() {
         typingSpan.textContent = current.substring(0, ++charIndex);
         if (charIndex === current.length) {
             deleting = true;
-            setTimeout(type, holdBeforeDelete); 
+            setTimeout(type, holdBeforeDelete);
         } else {
             setTimeout(type, typeSpeed);
         }
@@ -76,7 +123,7 @@ function type() {
         if (charIndex === 0) {
             deleting = false;
             phraseIndex = (phraseIndex + 1) % phrases.length;
-            setTimeout(type, 300);        
+            setTimeout(type, 300);
         } else {
             setTimeout(type, deleteSpeed);
         }
@@ -84,6 +131,8 @@ function type() {
 }
 
 type();
+
+/* ---------------- Lightbox ---------------- */
 
 const lightbox = document.getElementById("lightbox");
 const lightboxImage = lightbox.querySelector(".lightbox-image");
@@ -96,12 +145,14 @@ document.querySelectorAll(".certificate-image").forEach((item) => {
         lightboxImage.alt = img.alt;
         lightbox.classList.add("open");
         lightbox.setAttribute("aria-hidden", "false");
+        document.body.style.overflow = "hidden";
     });
 });
 
 function closeLightbox() {
     lightbox.classList.remove("open");
     lightbox.setAttribute("aria-hidden", "true");
+    document.body.style.overflow = "";
 }
 
 lightboxClose.addEventListener("click", closeLightbox);
@@ -111,5 +162,13 @@ lightbox.addEventListener("click", (e) => {
 });
 
 window.addEventListener("keydown", (e) => {
-    if (e.key === "Escape") closeLightbox();
+    if (e.key === "Escape") {
+        closeLightbox();
+        closeMobileNav();
+    }
 });
+
+/* ---------------- Footer year ---------------- */
+
+const yearSpan = document.getElementById("year");
+if (yearSpan) yearSpan.textContent = new Date().getFullYear();
